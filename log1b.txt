@@ -1,0 +1,20 @@
+part1b.c: In function ‘main’:
+part1b.c:7:5: warning: argument 2 null where non-null expected [-Wnonnull]
+    7 |     execl("./part1a", (char*)NULL);
+      |     ^~~~~
+In file included from part1b.c:2:
+/usr/include/unistd.h:594:12: note: in a call to function ‘execl’ declared ‘nonnull’
+  594 | extern int execl (const char *__path, const char *__arg, ...)
+      |            ^~~~~
+part1b.c:7:5: warning: not enough variable arguments to fit a sentinel [-Wformat=]
+    7 |     execl("./part1a", (char*)NULL);
+      |     ^~~~~
+part1b.c:11:5: warning: argument 2 null where non-null expected [-Wnonnull]
+   11 |     execl("./part1a", (char*)NULL);
+      |     ^~~~~
+/usr/include/unistd.h:594:12: note: in a call to function ‘execl’ declared ‘nonnull’
+  594 | extern int execl (const char *__path, const char *__arg, ...)
+      |            ^~~~~
+part1b.c:11:5: warning: not enough variable arguments to fit a sentinel [-Wformat=]
+   11 |     execl("./part1a", (char*)NULL);
+      |     ^~~~~
