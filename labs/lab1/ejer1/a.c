@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int main(){
+int main()
+{
   printf("Hello World!\n");
   printf("%d\n", (int)getpid());
-  return(0);
+  return (0);
 }
