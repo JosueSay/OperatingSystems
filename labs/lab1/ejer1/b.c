@@ -11,7 +11,7 @@ int main()
   else
   {
     printf("%d\n", (int)getpid());
-    execl("./b.o", "b", (char *)NULL);
+    execl("./a.o", "a.o", (char *)NULL);
   }
 
   return 0;
