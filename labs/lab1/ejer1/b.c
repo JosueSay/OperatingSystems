@@ -6,12 +6,12 @@ int main()
 
   if (f == 0)
   {
-    execl("./a.o", "a", (char *)NULL); // Se adjunta un arg, para evitar los warings en consola
+    execl("./a.exe", "a", (char *)NULL); // Se adjunta un arg, para evitar los warings en consola
   }
   else
   {
     printf("%d\n", (int)getpid());
-    execl("./a.o", "a.o", (char *)NULL);
+    execl("./a.exe", "a", (char *)NULL);
   }
 
   return 0;
