@@ -155,4 +155,60 @@ gcc .\b.c -o b.exe
 
 ## Ejercicio 2 - Parte c
 
+### [¿Qué es Strace?](https://wiki.ubuntu.com/Strace)
+
+Comandos para rastrear llamadas a sistemas y señales de un proceso para depurar y analizar como se comporta un programa a nivel de sistema operativo.
+
+### Instalando `strace`
+
+```bash
+sudo apt update
+sudo apt upgrade
+sudo apt-get install strace
+```
+
+![Instalacióon de strace](./images/instalacion_strace.png "Instalacióon de strace")
+
 ## Ejercicio 2 - Parte d
+
+Ejecute los siguientes comandos:
+
+```bash
+cd .\labs\lab1\ejer2\
+gcc .\b.c -o b.o
+strace ./b.o origen.txt destino.txt | tee logB.txt
+```
+
+### Observaciones
+
+1. **Resultado del comando `strace`**  
+   Se observará el retorno del comando `strace`, el archivo modificado `destino.txt` y el `logB.txt` para ver el resultado de la instrucción `strace`.
+
+2. **Verificación y compilación de archivos**  
+
+   ![Verificando Archivos](./images/verificando_archivos.png "Verificando Archivos")
+
+3. **Ejecución de la instrucción `strace`**  
+
+   ![Ejecutando Instrucción Strace](./images/ejeucion_strace.png "Ejecutando Instrucción Strace")
+
+4. **Resultado del archivo destino**  
+
+   ![Resultado Archivo Destino](./images/archivo_destino.png "Resultado Archivo Destino")
+
+### Preguntas
+
+1. **Primera llamada a `execve`**  
+   - ¿Por qué la primera llamada que aparece es `execve`?
+
+2. **Llamadas de sistema realizadas por usted**  
+   - Ubique las llamadas de sistema que ha realizado.  
+   - ¿Qué significan los resultados (números que aparecen después del signo `=`)?
+
+3. **Llamada `read` vacía**  
+   - ¿Por qué entre las llamadas realizadas por usted hay una llamada `read` sin datos?
+
+4. **Servicios del sistema operativo identificados en el `strace`**  
+   - Identifique tres servicios distintos provistos por el sistema operativo en el `strace`.  
+   - Liste y explique brevemente las llamadas a sistema que corresponden a los servicios identificados.  
+   - Puede incluir llamadas como `read`, `write`, `open` o `close` que el sistema haya realizado por usted, no aquellas generadas directamente por su programa.
