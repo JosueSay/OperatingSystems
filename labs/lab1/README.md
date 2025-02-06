@@ -2,47 +2,26 @@
 
 ## Ejercicio 1 - Parte a
 
-### Código
+**El código está en el archivo `a.c`.**
 
-```c
-#include <stdio.h>
-#include <unistd.h>
-
-int main() {
-    printf("Hello World!\n");
-    printf("%d\n", (int)getpid());
-    return 0;
-}
+```bash
+cd .\labs\lab1\ejer1\
 ```
 
 ### Explicación
 
 - **`#include`**: Permite importar código de bibliotecas externas. En este caso, `stdio.h` se usa para operaciones de entrada y salida, y `unistd.h` para el manejo de procesos y llamadas al sistema.
-- **Compilación**: Los archivos `.c` se convierten en código objeto `.o`, y el **linker** une estos archivos para crear el ejecutable.
+- **Compilación**: Los archivos `.c` se convierten en código objeto `.o` o ejecutables `.exe`, y el **linker** une estos archivos para crear el ejecutable.
 - **`main`**: Es el punto de entrada del programa, el retorno es obligado y el valor 0 para ejecución exitosa y != 0 para ejecución NO exitosa.
 - **`printf`**: Imprime texto en la salida estándar.
 - **`getpid()`**: Obtiene el identificador del proceso (PID) actual.
 
 ## Ejercicio 1 - Parte b
 
-### Código
+**El código está en el archivo `b.c`.**
 
-```c
-#include <stdio.h>
-#include <unistd.h>
-
-int main() {
-    int f = fork();
-
-    if (f == 0) {
-        execl("./part1a", "part1a", (char*)NULL);
-    } else {
-        printf("%d\n", (int)getpid());  
-        execl("./part1a", "part1a", (char*)NULL);
-    }
-
-    return 0;
-}
+```bash
+cd .\labs\lab1\ejer1\
 ```
 
 ### Explicación
@@ -81,6 +60,20 @@ int execl(const char *path, const char *arg0, ..., (char *)NULL);
 
 ## Ejercicio 1 - Parte c
 
+Se compilaron los dos archivos c:
+
+```bash
+gcc a.c -o a.exe
+gcc b.c -o b.exe
+```
+
+Se ejecutaron los archivos correspondientes:
+
+```bash
+./a.exe
+./b.exe
+```
+
 - **¿Por qué aparecen números diferentes al ejecutar el primer programa varias veces?**
   - ![Ejecución Programa 1a](./images/ejecucion_part1a.png "Ejecución Programa 1a")
   - Cada ejecución recibe un PID único asignado por el sistema.
@@ -98,7 +91,61 @@ int execl(const char *path, const char *arg0, ..., (char *)NULL);
 
 ## Ejercicio 2 - Parte a
 
+| Función | Descripción |
+|---------|------------|
+| `open()`  | Abre o crea un archivo. |
+| `close()` | Cierra un archivo. |
+| `read()`  | Lee datos desde un archivo. |
+| `write()` | Escribe datos en un archivo. |
+
+>**Nota:** La investigación mas detallada esta en el archivo `documentation_c.md`.
+
 ## Ejercicio 2 - Parte b
+
+**El código está en el archivo `b.c`.**
+
+```bash
+cd .\labs\lab1\ejer2\
+```
+
+### Explicación
+
+1. **Verificación de argumentos:**  
+   - El programa requiere dos argumentos: `archivo_origen` y `archivo_destino`.  
+   - Si no se proporcionan, muestra un mensaje de error y termina.  
+
+2. **Abrir el archivo de origen:**  
+   - `open(argv[1], O_RDONLY)`: Abre el archivo en modo solo lectura.  
+   - Si falla, se muestra un error.  
+
+3. **Obtener tamaño del archivo:**  
+   - `fstat(descriptorFile, &st)`: Llena la estructura `stat` con información del archivo.  
+   - `st.st_size`: Contiene el tamaño del archivo en bytes.  
+
+4. **Asignación de memoria:**  
+   - `malloc(fileSize + 2)`: Reserva memoria para almacenar el contenido del archivo más un `\n`.  
+   - Si `malloc` falla, muestra un error y termina.  
+
+5. **Leer el contenido del archivo:**  
+   - `read(descriptorFile, buffer, fileSize)`: Carga el contenido en `buffer`.  
+   - Si falla, se muestra un error.  
+   - Se agrega un salto de línea `buffer[bRead] = '\n';`.  
+
+6. **Abrir el archivo de destino:**  
+   - `open(argv[2], O_WRONLY | O_CREAT | O_APPEND, 0777)`:  
+     - `O_WRONLY`: Modo escritura.  
+     - `O_CREAT`: Crea el archivo si no existe.  
+     - `O_APPEND`: Agrega contenido al final del archivo.  
+     - `0777`: Permisos de lectura, escritura y ejecución para todos.  
+
+7. **Escribir en el archivo de destino:**  
+   - `write(descriptorDest, buffer, bRead + 1)`: Escribe el contenido leído más el salto de línea.  
+   - Si falla, muestra un error.  
+
+8. **Liberar recursos:**  
+   - `free(buffer)`: Libera la memoria asignada.  
+   - `close(descriptorFile)`: Cierra el archivo de origen.  
+   - `close(descriptorDest)`: Cierra el archivo de destino.  
 
 ## Ejercicio 2 - Parte c
 
