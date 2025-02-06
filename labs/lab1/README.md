@@ -106,7 +106,13 @@ Se ejecutaron los archivos correspondientes:
 
 ```bash
 cd .\labs\lab1\ejer2\
+gcc .\b.c -o b.exe
+.\b.exe origen.txt destino.txt
 ```
+
+![Ejecución Programa 2a](./images/ejecucion_part2b.png "Ejecución Programa 2a")
+
+![Ejecución2 Programa 2a](./images/ejecucion2_part2b.png "Ejecución2 Programa 2a")
 
 ### Explicación
 
