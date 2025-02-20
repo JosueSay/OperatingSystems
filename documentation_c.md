@@ -36,6 +36,12 @@ int main() {
 
 `fork` es una llamada al sistema que permite crear un nuevo proceso.
 
+#### Librerias
+
+```c
+#include <unistd.h>
+```
+
 #### ⚙️ Funcionamiento
 
 Un proceso ejecuta un bloque de código, y a este proceso se le denomina **proceso padre** (o proceso original). Cuando el proceso padre llama a `fork()`, lo que ocurre es que se crea un **nuevo proceso** llamado **proceso hijo**, que es un clon del padre. La función `fork()` devuelve dos valores distintos dependiendo de si está en el proceso padre o en el hijo.
