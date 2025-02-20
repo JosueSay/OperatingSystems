@@ -3,13 +3,16 @@
 
 int main()
 {
+  int count_p = 0;
 
   fork();
   fork();
   fork();
   fork();
 
-  printf("Proceso PID: %d, PPID: %d\n", getpid(), getppid());
+  count_p++;
+
+  printf("La cantidad de contador de procesos fue %d", count_p);
 
   return 0;
 }

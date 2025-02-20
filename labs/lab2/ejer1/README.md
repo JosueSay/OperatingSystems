@@ -7,4 +7,5 @@ Cree un programa en C que ejecute cuatro `fork()s` consecutivos. Luego cree otro
 ## Preguntas
 
 - ¿Cuántos procesos se crean en cada uno de los programas?
+  - *R* Se activan por cada proceso 
 - ¿Por qué hay tantos procesos en ambos programas cuando uno tiene cuatro llamadas fork() y el otro sólo tiene una?
