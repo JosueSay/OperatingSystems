@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdio.h>
 
 int main()
 {
@@ -7,8 +8,10 @@ int main()
 
   for (size_t i = 0; i < count; i++)
   {
-    forkk();
+    fork();
   }
+
+  printf("Proceso PID: %d, PPID: %d\n", getpid(), getppid());
 
   return 0;
 }
