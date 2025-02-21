@@ -31,7 +31,7 @@ int main()
       // hijo
       for (size_t i = 0; i < count; i++)
       {
-        printf("%d", i);
+        printf("%zu", i);
       }
       wait(NULL);
     }
@@ -44,7 +44,7 @@ int main()
         // nieto
         for (size_t i = 0; i < count; i++)
         {
-          printf("%d", i);
+          printf("%zu", i);
         }
         wait(NULL);
       }
@@ -53,7 +53,7 @@ int main()
         // bisnieto
         for (size_t i = 0; i < count; i++)
         {
-          printf("%d", i);
+          printf("%zu", i);
         }
       }
       else

@@ -10,17 +10,17 @@ int main()
   timer1 = clock();
   for (size_t i = 0; i < count; i++)
   {
-    // printf("%zu", i);
+    printf("%zu", i);
   }
 
   for (size_t i = 0; i < count; i++)
   {
-    // printf("%zu", i);
+    printf("%zu", i);
   }
 
   for (size_t i = 0; i < count; i++)
   {
-    // printf("%zu", i);
+    printf("%zu", i);
   }
   timer2 = clock();
 
