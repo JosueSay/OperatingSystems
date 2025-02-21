@@ -4,13 +4,13 @@
 
 Realizando un programa con 3 `for` consecutivos con 1 millón de iteraciones, tomando el tiempo que ha transcurrido desde el primer `for` hasta que se acaban los 3, usando la librería `time` e imprimiendo la resta de estos tiempos en la pantalla. Se ejecutó varias veces dicho programa obteniendo estos resultados:
 
-| Ejecución | Resultado  |
-|-----------|------------|
-| 1         | 3532.000000|
-| 2         | 4354.000000|
-| 3         | 3886.000000|
-| 4         | 3680.000000|
-| 5         | 3785.000000|
+| Ejecución | Resultado(s)  |
+|-----------|---------------|
+| 1         | 0.004220|
+| 2         | 0.003826|
+| 3         | 0.003533|
+| 4         | 0.004095|
+| 5         | 0.003564|
 
 ![Tiempos Consecutivos de Ejecución](../images/tiempos_cons_ejer2.png "Tiempos Consecutivos de Ejecución")
 
@@ -18,13 +18,13 @@ Realizando un programa con 3 `for` consecutivos con 1 millón de iteraciones, to
 
 En este ejercicio, se desarrolló un programa que crea procesos hijos, generando una jerarquía de bisnietos. Cada hijo ejecuta un ciclo `for`, mientras que cada proceso padre espera a que su hijo termine su ejecución antes de continuar. El tiempo se mide desde antes de la creación del primer hijo hasta que el proceso raíz (el padre) termina de esperar a todos sus hijos, utilizando la librería `time`. Se ejecutó varias veces dicho programa obteniendo estos resultados:
 
-| Ejecución | Resultado  |
+| Ejecución | Resultado(s)  |
 |-----------|------------|
-| 1         | 78.000000|
-| 2         | 61.000000|
-| 3         | 98.000000|
-| 4         | 55.000000|
-| 5         | 95.000000|
+| 1         | 0.000061|
+| 2         | 0.000050|
+| 3         | 0.000085|
+| 4         | 0.000074|
+| 5         | 0.000054|
 
 ![Tiempos Concurrentes de Ejecución](../images/tiempos_conc_ejer2.png "Tiempos Concurrentes de Ejecución")
 
