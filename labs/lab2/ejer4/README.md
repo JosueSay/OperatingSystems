@@ -1,6 +1,6 @@
 # Ejercicio 4  
 
-Los resultados se encuentran en la carpeta `labs/lab2/ejer4` del [*repositorio*](https://github.com/JosueSay/OperatingSystems/tree/main/labs/lab2), almacenados como archivos de texto (`.txt`). Estos archivos contienen los registros obtenidos para cada caso:  
+Los resultados se encuentran en la carpeta `labs/lab2/ejer4` del [**repositorio**](https://github.com/JosueSay/OperatingSystems/tree/main/labs/lab2), almacenados como archivos de texto (`.txt`). Estos archivos contienen los registros obtenidos para cada caso:  
 
 ```bash
 /ejer4
@@ -8,6 +8,38 @@ Los resultados se encuentran en la carpeta `labs/lab2/ejer4` del [*repositorio*]
 ├── log2.txt     # Registro del Inciso 2 antes de hacer kill al proceso padre del programa en ejecución  
 └── log2_1.txt   # Registro del Inciso 2 después de hacer kill al proceso padre del programa en ejecución  
 ```  
+
+## [*PS*](https://manpages.ubuntu.com/manpages/oracular/en/man1/ps.1posix.html) y [*KILL*](https://manpages.ubuntu.com/manpages/noble/en/man1/kill.1.html)
+
+- **`ps`** forma parte de la **librería `procps`** en sistemas Linux.  
+- **`ps`** muestra información sobre los procesos en ejecución.  
+- **`-ael`** significa:  
+  - `-a` → Muestra procesos de todos los usuarios.  
+  - `-e` → Muestra todos los procesos del sistema.  
+  - `-l` → Usa formato extendido con más detalles.
+
+- **`kill`** forma parte de la **librería `util-linux`** en sistemas Linux.  
+  - **`kill -9 <num_proceso>`** envía la señal **SIGKILL (9)** para **forzar la terminación inmediata** del proceso.  
+  - **`-9` (SIGKILL)** significa que el proceso **no puede ignorar ni manejar la señal**, terminando de inmediato.  
+
+### Columnas de PS
+
+| **Columna** | **Significado** |
+|------------|----------------|
+| **F**  | Flags del proceso (0 = normal, 4 = carga de usuario, 1 = alta prioridad, etc.) |
+| **S**  | Estado del proceso:<br>`R` = Running (Ejecutando)<br> `S` = Sleeping (Durmiendo, esperando evento)<br> `I` = Idle (Inactivo, usualmente procesos del kernel)<br> `Z` = Zombie (Terminado, pero no recogido por su padre) |
+| **UID** | ID del usuario propietario del proceso |
+| **PID** | ID del proceso |
+| **PPID** | ID del proceso padre |
+| **C**  | Uso de CPU del proceso (valores altos indican uso intensivo) |
+| **PRI** | Prioridad del proceso (más bajo = mayor prioridad) |
+| **NI**  | Niceness (qué tan "amable" es el proceso con otros en cuanto a CPU, valores negativos = más prioridad) |
+| **ADDR** | Dirección de memoria del proceso (generalmente no se usa en sistemas modernos) |
+| **SZ**  | Tamaño del proceso en páginas de memoria |
+| **WCHAN** | En qué está esperando el proceso (si está dormido) |
+| **TTY** | Terminal asociada al proceso (si aplica) |
+| **TIME** | Tiempo total de CPU usado por el proceso |
+| **CMD** | Nombre del comando que inició el proceso |
 
 ## Inciso 1 - Proceso Zombi  
 
