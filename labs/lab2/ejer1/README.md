@@ -6,7 +6,7 @@ Cree un programa en C que ejecute cuatro `fork()s` consecutivos. Luego cree otro
 
 ## Preguntas
 
-- ¿Cuántos procesos se crean en cada uno de los programas?
+- **¿Cuántos procesos se crean en cada uno de los programas?**
   
   | Fork          | Proceso(s) que lo ejecuta(n)              | Procesos creados           | Resultado final                          |
   |--------------|---------------------------------|---------------------------|------------------------------------------|
@@ -17,6 +17,6 @@ Cree un programa en C que ejecute cuatro `fork()s` consecutivos. Luego cree otro
 
   Dando un total de 16 procesos, siguiendo la lógica de que cada proceso ejecutado crea un hijo. En cada iteración, tendremos $2^k$ procesos resultantes cada vez que se ejecuta un `fork`, donde $k$ es la cantidad de veces que se ha ejecutado el `fork`. Por ejemplo, si se ejecutan 4 forks, se tendrán $2^4 = 16$ procesos.
 
-- ¿Por qué hay tantos procesos en ambos programas cuando uno tiene cuatro llamadas fork() y el otro sólo tiene una?
+- **¿Por qué hay tantos procesos en ambos programas cuando uno tiene cuatro llamadas fork() y el otro sólo tiene una?**
   
   Como se explicó en el inciso anterior, cada `fork()` genera como resultado dos procesos. Por lo tanto, en el primer ejercicio, con 4 forks, el resultado será un total de 16 procesos creados por su ejecución. Sin embargo, en el caso del `for`, aunque solo haya una instancia, esta se encuentra dentro de una iteración en la que igualmente se ejecutarán 4 forks, por lo que se obtendrá el mismo resultado de 16 procesos.
