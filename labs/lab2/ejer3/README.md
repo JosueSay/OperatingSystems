@@ -14,10 +14,10 @@ Se ejecutaron los siguientes comandos en una distribución Ubuntu utilizando la 
     pidstat -w 1 1 | tee -a log.txt
     ```
 
-Los resultados se encuentran en la carpeta `labs/lab2/ejer3` del [*repositorio*](www.google.com) utilizado como archivos de texto (`.txt`), los cuales contienen los registros obtenidos para cada caso:
+Los resultados se encuentran en la carpeta `labs/lab2/ejer3/` del [*repositorio*](https://github.com/JosueSay/OperatingSystems/tree/main/labs/lab2) utilizado como archivos de texto (`.txt`), los cuales contienen los registros obtenidos para cada caso:
 
 ```bash
-./ejer3
+/ejer3
 ├── log1.txt          # Registro sin realizar ninguna acción adicional
 ├── log2.txt          # Registro moviendo la terminal en la interfaz
 ├── log3.txt          # Registro escribiendo en la terminal donde se ejecutó el comando
@@ -30,7 +30,7 @@ Los resultados se encuentran en la carpeta `labs/lab2/ejer3` del [*repositorio*]
 
 ### Explorando pidstats
 
-Para esta parte se analizarán los archivos `log1.txt`, `log2.txt` y `log3.txt` que se pueden observar en el [*repositorio*](www.google.com).
+Para esta parte se analizarán los archivos `log1.txt`, `log2.txt` y `log3.txt` que se pueden observar en el [*repositorio*](https://github.com/JosueSay/OperatingSystems/tree/main/labs/lab2).
 
 - **`log1.txt`** servirá como referencia para observar el comportamiento del sistema sin interacción adicional.  
 - **`gnome-terminal-` y `gnome-shell`** son procesos clave, ya que `gnome-terminal` maneja la interfaz de la terminal y `gnome-shell` gestiona la parte visual. Ambos estarán presentes en todos los registros.
@@ -45,7 +45,7 @@ Para esta parte se analizarán los archivos `log1.txt`, `log2.txt` y `log3.txt` 
 
 ### Usando pidstats con programas
 
-Para esta parte se analizarán los archivos `log_conc.txt` y `log_cons.txt` que se pueden observar en el [*repositorio*](www.google.com).
+Para esta parte se analizarán los archivos `log_conc.txt` y `log_cons.txt` que se pueden observar en el [*repositorio*](https://github.com/JosueSay/OperatingSystems/tree/main/labs/lab2).
 
 - El programa que uso `for's` consecutivos fue `b.exe` sus logs son `log_cons.txt`.
 - El programa que uso `for's` concurrentes fue `a.exe` sus logs son `log_conc.txt`.
@@ -88,7 +88,7 @@ Para esta parte se analizarán los archivos `log_conc.txt` y `log_cons.txt` que 
 
 ### Usando pidstas con programas + otras actividades
 
-Para esta parte se analizarán el archivo `log_combinae.txt` que se pueden observar en el [*repositorio*](www.google.com); la actividad fuerte está entre lineas 69-151.
+Para esta parte se analizarán el archivo `log_combinae.txt` que se pueden observar en el [*repositorio*](https://github.com/JosueSay/OperatingSystems/tree/main/labs/lab2); la actividad fuerte está entre lineas 69-151.
 
 - **¿Qué efecto percibe sobre el número de cambios de contexto de cada tipo?**
 
