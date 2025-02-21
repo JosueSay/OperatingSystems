@@ -6,7 +6,7 @@ int main()
 {
 
   pid_t pid = fork();
-  int count = 10000000;
+  int count = 8000000;
 
   if (pid > 0)
   {
@@ -19,7 +19,7 @@ int main()
   {
     for (size_t i = 0; i < count; i++)
     {
-      printf("El contador va por %d\n", i + 1);
+      printf("El contador va por %zu\n", i + 1);
     }
   }
   else
