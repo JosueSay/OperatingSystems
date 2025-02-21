@@ -1,0 +1,71 @@
+Linux 6.11.0-14-generic (osboxes) 	02/20/2025 	_x86_64_	(4 CPU)
+
+11:29:28 PM   UID       PID   cswch/s nvcswch/s  Command
+11:29:29 PM     0         2      0.98      0.00  kthreadd
+11:29:29 PM     0        16      0.98      0.00  ksoftirqd/0
+11:29:29 PM     0        17     55.88      0.00  rcu_preempt
+11:29:29 PM     0        53      1.96      0.00  kcompactd0
+11:29:29 PM     0       476     48.04      0.00  irq/16-vmwgfx
+11:29:29 PM   990      1162      0.98      0.00  systemd-oomd
+11:29:29 PM     0      1169     10.78      0.00  vmtoolsd
+11:29:29 PM     0      1563      0.98      0.00  wpa_supplicant
+11:29:29 PM  1000      2519      1.96      0.00  dbus-daemon
+11:29:29 PM  1000      2804    171.57     46.08  gnome-shell
+11:29:29 PM  1000      2901     82.35      0.00  ibus-daemon
+11:29:29 PM  1000      3035     10.78      0.00  vmtoolsd
+11:29:29 PM  1000      3123     28.43      0.00  ibus-extension-
+11:29:29 PM  1000      3246     22.55      0.00  ibus-engine-sim
+11:29:29 PM  1000      3335      0.98      0.00  Xwayland
+11:29:29 PM  1000      3711      0.98      0.00  mutter-x11-fram
+11:29:29 PM  1000      3928   3398.04   1547.06  gnome-terminal-
+11:29:29 PM     0      5823      2.94      0.00  kworker/0:1-events
+11:29:29 PM  1000      6036      0.98      0.00  bash
+11:29:29 PM     0      6200   1615.69     25.49  kworker/u515:2-events_unbound
+11:29:29 PM     0      6266     14.71      0.00  kworker/u513:0-events_unbound
+11:29:29 PM     0      6335    442.16     39.22  kworker/u516:0-events_unbound
+11:29:29 PM     0      6412      0.98      0.00  kworker/u514:3-events_unbound
+11:29:29 PM     0      6417      2.94      0.00  kworker/2:2-events
+11:29:29 PM     0      6424     97.06      2.94  kworker/u515:1-events_unbound
+11:29:29 PM     0      6491     13.73      0.00  kworker/3:3-events
+11:29:29 PM     0      6544    673.53     77.45  kworker/u516:3-events_unbound
+11:29:29 PM     0      6561   1733.33     50.98  kworker/u515:0-events_unbound
+11:29:29 PM     0      6590    696.08     84.31  kworker/u516:2-events_unbound
+11:29:29 PM     0      6677      2.94      0.00  kworker/1:0-events
+11:29:29 PM  1000      6685      0.98      2.94  pidstat
+11:29:29 PM  1000      6687    900.00   1897.06  a.exe
+11:29:29 PM     0      6688    707.84    101.96  kworker/u516:1-events_unbound
+
+Average:      UID       PID   cswch/s nvcswch/s  Command
+Average:        0         2      0.98      0.00  kthreadd
+Average:        0        16      0.98      0.00  ksoftirqd/0
+Average:        0        17     55.88      0.00  rcu_preempt
+Average:        0        53      1.96      0.00  kcompactd0
+Average:        0       476     48.04      0.00  irq/16-vmwgfx
+Average:      990      1162      0.98      0.00  systemd-oomd
+Average:        0      1169     10.78      0.00  vmtoolsd
+Average:        0      1563      0.98      0.00  wpa_supplicant
+Average:     1000      2519      1.96      0.00  dbus-daemon
+Average:     1000      2804    171.57     46.08  gnome-shell
+Average:     1000      2901     82.35      0.00  ibus-daemon
+Average:     1000      3035     10.78      0.00  vmtoolsd
+Average:     1000      3123     28.43      0.00  ibus-extension-
+Average:     1000      3246     22.55      0.00  ibus-engine-sim
+Average:     1000      3335      0.98      0.00  Xwayland
+Average:     1000      3711      0.98      0.00  mutter-x11-fram
+Average:     1000      3928   3398.04   1547.06  gnome-terminal-
+Average:        0      5823      2.94      0.00  kworker/0:1-events
+Average:     1000      6036      0.98      0.00  bash
+Average:        0      6200   1615.69     25.49  kworker/u515:2-events_unbound
+Average:        0      6266     14.71      0.00  kworker/u513:0-events_unbound
+Average:        0      6335    442.16     39.22  kworker/u516:0-events_unbound
+Average:        0      6412      0.98      0.00  kworker/u514:3-events_unbound
+Average:        0      6417      2.94      0.00  kworker/2:2-events
+Average:        0      6424     97.06      2.94  kworker/u515:1-events_unbound
+Average:        0      6491     13.73      0.00  kworker/3:3-events
+Average:        0      6544    673.53     77.45  kworker/u516:3-events_unbound
+Average:        0      6561   1733.33     50.98  kworker/u515:0-events_unbound
+Average:        0      6590    696.08     84.31  kworker/u516:2-events_unbound
+Average:        0      6677      2.94      0.00  kworker/1:0-events
+Average:     1000      6685      0.98      2.94  pidstat
+Average:     1000      6687    900.00   1897.06  a.exe
+Average:        0      6688    707.84    101.96  kworker/u516:1-events_unbound
