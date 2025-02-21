@@ -100,12 +100,39 @@ done | tee -a log2.txt
 
 ### Preguntas  
 
-Para este inciso, se utilizaron los archivos `log2.txt` y el comando mencionado.
+Para este inciso, se utilizaron los archivos `log2.txt` y el comando mencionado. La parte importante está en las líneas 145-167:
+
+```bash
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+Fri Feb 21 05:49:35 PM EST 2025
+0 R  1000   10617    8597 89  80   0 -   653 -      pts/2    00:00:14 pb.exe
+1 R  1000   10618   10617 52  80   0 -   686 -      pts/2    00:00:08 pb.exe
+4 S     0       1       0  0  80   0 -  5964 -      ?        00:00:23 systemd
+4 S     0     409       1  0  79  -1 - 14567 -      ?        00:00:04 systemd-journal
+4 S     0     466       1  0  80   0 -  8113 -      ?        00:00:01 systemd-udevd
+4 S   990    1164       1  0  80   0 -  4185 -      ?        00:01:30 systemd-oomd
+4 S   991    1165       1  0  80   0 -  5327 -      ?        00:00:02 systemd-resolve
+4 S   996    1166       1  0  80   0 - 22557 -      ?        00:00:00 systemd-timesyn
+4 S     0    1583       1  0  80   0 -  4375 -      ?        00:00:01 systemd-logind
+4 S  1000    3070       1  0  80   0 -  5384 -      ?        00:00:02 systemd
+4 S   998    4827       1  0  80   0 -  4568 -      ?        00:00:00 systemd-network
+Fri Feb 21 05:49:36 PM EST 2025
+1 R  1000   10618    3070 52  80   0 -   686 -      pts/2    00:00:09 pb.exe
+4 S     0       1       0  0  80   0 -  5964 -      ?        00:00:23 systemd
+4 S     0     409       1  0  79  -1 - 14567 -      ?        00:00:04 systemd-journal
+4 S     0     466       1  0  80   0 -  8113 -      ?        00:00:01 systemd-udevd
+4 S   990    1164       1  0  80   0 -  4185 -      ?        00:01:30 systemd-oomd
+4 S   991    1165       1  0  80   0 -  5327 -      ?        00:00:02 systemd-resolve
+4 S   996    1166       1  0  80   0 - 22557 -      ?        00:00:00 systemd-timesyn
+4 S     0    1583       1  0  80   0 -  4375 -      ?        00:00:01 systemd-logind
+4 S  1000    3070       1  0  80   0 -  5384 -      ?        00:00:02 systemd
+4 S   998    4827       1  0  80   0 -  4568 -      ?        00:00:00 systemd-network
+```
 
 - **¿Qué sucede en la ventana donde ejecutó su programa?**
 
-  - sds
+  - La terminal no se puede manipular ni cancelar con `CTRL + C` porque el proceso hijo se volvió huérfano al morir su padre y fue adoptado por `systemd` (proceso 370). `systemd` no está conectado a la terminal y no recibe el [**SIGINT**](https://www.baeldung.com/linux/sigint-and-other-termination-signals) que envía `CTRL + C` para cancelar un proceso. El proceso hijo ahora está bajo la supervisión de `systemd`, no de la terminal donde estaba el padre.
 
 - **Al volver a ejecutar `ps -ael`, ¿quién es el padre del proceso que quedó huérfano?**
-  
+  - El proceso 370 que es `systemd` lo que se suponía según esta [**documentación**](https://stackoverflow.com/questions/20688982/zombie-process-vs-orphan-process).
   
