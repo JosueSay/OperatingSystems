@@ -1,27 +1,5 @@
 # Cambios de Contexto
 
-El comando `sudo apt-get install sysstat` se usa para instalar el paquete **sysstat** en sistemas basados en Debian, como Ubuntu.
-
-El paquete **sysstat** incluye herramientas para monitorear el rendimiento del sistema, como:
-
-- **`iostat`**: muestra estadísticas sobre el uso de CPU y las operaciones de entrada/salida de dispositivos.
-- **`mpstat`**: muestra el uso de la CPU por cada procesador individual.
-- **`pidstat`**: proporciona estadísticas sobre procesos individuales.
-- **`sar`**: recopila, reporta y guarda estadísticas de rendimiento del sistema a lo largo del tiempo.
-- **`tload`**: muestra una representación gráfica de la carga del sistema.
-
-El comando `pidstat -w 1` muestra información sobre los procesos en tu sistema, con un enfoque en las estadísticas relacionadas con el intercambio de contexto (context switches) y los tiempos de espera de los procesos. Aquí hay una explicación de cada columna:
-
-- **UID**: El ID de usuario del proceso.
-- **PID**: El ID del proceso.
-- **cswch/s**: El número de cambios de contexto voluntarios por segundo (voluntary context switches), es decir, cuántas veces un proceso ha cedido voluntariamente la CPU.
-- **nvcswch/s**: El número de cambios de contexto no voluntarios por segundo (involuntary context switches), es decir, cuántas veces el sistema operativo ha interrumpido un proceso para que otro tome la CPU.
-- **Command**: El nombre del comando o proceso que está siendo ejecutado.
-
-Este comando se actualiza cada segundo (debido a `-w 1`), por lo que muestra información en tiempo real. Los cambios de contexto pueden ocurrir cuando un proceso no tiene tiempo de CPU disponible, y el sistema operativo lo interrumpe para darle tiempo a otro proceso.
-
-## Glosario
-
 - **Contexto:** es toda la información que define el estado de un proceso en un momento dado, es decir, lo que está haciendo y qué recursos está utilizando.
 
 - **Cambio de contexto** es cuando el sistema guarda lo que está haciendo un proceso y lo reemplaza por otro proceso, para que ambos puedan compartir el tiempo del CPU. Es como cambiar de tarea en una lista, guardando lo que hiciste para retomar más tarde.

@@ -2,7 +2,7 @@
 
 Usando una máquina virtual con más de un proceso (recomendación de 4 procesos).
 
-Cree un programa en C que ejecute cuatro `fork()s` consecutivos. Luego cree otro programa en C que ejecute `fork()` dentro de un ciclo for de cuatro iteraciones.
+Se realizó un programa en C que ejecute cuatro `fork()s` consecutivos. Luego cree otro programa en C que ejecute `fork()` dentro de un ciclo for de cuatro iteraciones.
 
 ## Preguntas
 

@@ -1,5 +1,21 @@
 # Ejercicio 3
 
+El comando `sudo apt-get install sysstat` se usa para instalar el paquete **sysstat**. Este paquete incluye herramientas para monitorear el rendimiento del sistema, como:
+
+- **`iostat`**: muestra estadísticas sobre el uso de CPU y las operaciones de entrada/salida de dispositivos.
+- **`mpstat`**: muestra el uso de la CPU por cada procesador individual.
+- **`pidstat`**: proporciona estadísticas sobre procesos individuales.
+- **`sar`**: recopila, reporta y guarda estadísticas de rendimiento del sistema a lo largo del tiempo.
+- **`tload`**: muestra una representación gráfica de la carga del sistema.
+
+El comando `pidstat -w 1` muestra información sobre los procesos en tu sistema, con un enfoque en las estadísticas relacionadas con el intercambio de contexto (context switches) y los tiempos de espera de los procesos. Aquí hay una explicación de cada columna:
+
+- **UID**: El ID de usuario del proceso.
+- **PID**: El ID del proceso.
+- **cswch/s**: El número de cambios de contexto voluntarios por segundo (voluntary context switches), es decir, cuántas veces un proceso ha cedido voluntariamente la CPU.
+- **nvcswch/s**: El número de cambios de contexto no voluntarios por segundo (involuntary context switches), es decir, cuántas veces el sistema operativo ha interrumpido un proceso para que otro tome la CPU.
+- **Command**: El nombre del comando o proceso que está siendo ejecutado.
+
 Se ejecutaron los siguientes comandos en una distribución Ubuntu utilizando la librería `sysstat`:
 
 1. Este comando obtiene datos del proceso y cambios de estado cada segundo sin finalizar:
