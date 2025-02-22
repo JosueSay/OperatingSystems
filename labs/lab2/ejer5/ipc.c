@@ -5,12 +5,22 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/wait.h>
 
 #define SHM_NAME "/shared_memory"
-#define SHM_SIZE 1024
+#define SHM_SIZE 20
 
 int main(int argc, char *argv[])
 {
+  if (argc < 3)
+  {
+    fprintf(stderr, "Uso: %s <n> <x>\n", argv[0]);
+    exit(1);
+  }
+
+  int n = atoi(argv[1]);
+  char x = argv[2][0];
+
   int fd;
   int pipefd[2];
 
@@ -21,30 +31,24 @@ int main(int argc, char *argv[])
     exit(1);
   }
 
-  // Se abre la memoria compartida, si no, se crea segun el file descriptor
-  // con tamaño SHM_SIZE, de lo contrario se imprime un mensaje que ya existe (fue abierto por otro proceso)
-
-  fd = shm_open(SHM_NAME, O_RDWR, 0666);
-
+  // Intentamos abrir o crear la memoria compartida
+  fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, 0666);
   if (fd == -1)
   {
-    printf("Creando memoria compartida...\n");
-    fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, 0666);
-    if (fd == -1)
-    {
-      perror("Error al crear la memoria compartida");
-      exit(1);
-    }
-    ftruncate(fd, SHM_SIZE);
+    perror("Error al abrir/crear la memoria compartida");
+    exit(1);
   }
-  else
+
+  // Ajustar el tamaño de la memoria compartida
+  if (ftruncate(fd, SHM_SIZE) == -1)
   {
-    printf("Memoria compartida encontrada, usando la existente.\n");
+    perror("Error al ajustar tamaño de la memoria compartida");
+    exit(1);
   }
 
-  printf("File descriptor de la memoria compartida: %d\n", fd);
+  printf("[Proceso padre] Creando la memoria compartida con file descriptor: %d\n", fd);
 
-  // Crear un proceso hijo y que este obtenga el file descriptor por la comunicación con el padre
+  // Crear proceso hijo
   pid_t pid = fork();
 
   if (pid == -1)
@@ -53,35 +57,39 @@ int main(int argc, char *argv[])
     exit(1);
   }
   else if (pid == 0)
-  {
+  { // Proceso hijo
+    close(pipefd[1]);
 
-    close(pipefd[1]); // Cierra el extremo de escritura del pipe
-    int received_fd;
-    read(pipefd[0], &received_fd, sizeof(received_fd));
-    close(pipefd[0]);
-
-    printf("Proceso hijo: Recibí el file descriptor %d\n", received_fd);
-
-    // Mapear la memoria compartida (no usar el fd)
-    void *shm_ptr = mmap(NULL, SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, received_fd, 0);
+    // Mapear memoria compartida
+    void *shm_ptr = mmap(NULL, SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (shm_ptr == MAP_FAILED)
     {
       perror("Error al mapear la memoria compartida en el hijo");
       exit(1);
     }
 
-    printf("Proceso hijo: Memoria compartida mapeada correctamente.\n");
+    printf("[Proceso hijo] Memoria compartida mapeada correctamente.\n");
+
+    // Leer del pipe y escribir en la memoria compartida
+    char received_char;
+    int index = 0;
+    while (read(pipefd[0], &received_char, sizeof(received_char)) > 0)
+    {
+      ((char *)shm_ptr)[index++] = received_char;
+      if (index >= SHM_SIZE)
+        break; // No exceder el tamaño
+    }
+
+    close(pipefd[0]);
+    munmap(shm_ptr, SHM_SIZE);
+    close(fd);
+    exit(0);
   }
   else
-  {
-    // Si es el proceso padre este envia el fd al hijo
-    close(pipefd[0]); // Cierra el extremo de lectura del pipe
-    write(pipefd[1], &fd, sizeof(fd));
-    close(pipefd[1]);
+  { // Proceso padre
+    close(pipefd[0]);
 
-    printf("Proceso padre: Envié el file descriptor %d al hijo.\n");
-
-    // Mapear la memoria compartida (no usar el df)
+    // Mapear memoria compartida
     void *shm_ptr = mmap(NULL, SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (shm_ptr == MAP_FAILED)
     {
@@ -89,9 +97,42 @@ int main(int argc, char *argv[])
       exit(1);
     }
 
-    printf("Proceso padre: Memoria compartida mapeada correctamente.\n");
+    printf("[Proceso padre] Memoria compartida mapeada correctamente.\n");
 
-    wait(NULL); // Esperar el hijo
+    // Ciclo de iteraciones
+    for (int i = 1; i <= SHM_SIZE; i++)
+    {
+      if (i % n == 0)
+      {
+        if (write(pipefd[1], &x, sizeof(x)) == -1)
+        {
+          perror("Error al escribir en el pipe");
+          exit(1);
+        }
+      }
+    }
+
+    close(pipefd[1]);
+
+    wait(NULL);
+
+    // Imprimir el contenido de la memoria compartida
+    printf("[Proceso padre] Contenido de la memoria compartida:\n");
+    for (int i = 0; i < SHM_SIZE; i++)
+    {
+      if (((char *)shm_ptr)[i] != '\0')
+      { // Imprimir solo posiciones escritas
+        printf("%c", ((char *)shm_ptr)[i]);
+      }
+    }
+    printf("\n");
+
+    // Limpiar recursos
+    munmap(shm_ptr, SHM_SIZE);
+    close(fd);
+    shm_unlink(SHM_NAME);
+
+    printf("[Proceso padre] Recursos limpiados correctamente.\n");
   }
 
   return 0;
