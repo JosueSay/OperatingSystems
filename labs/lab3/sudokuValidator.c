@@ -7,6 +7,10 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <pthread.h>
+#include <sys/syscall.h>
 
 #define SIZE 9
 #define SUBGRID_SIZE 3
@@ -80,6 +84,9 @@ int validateSubgrid(int startRow, int startCol)
 
 int main(int argc, char *argv[])
 {
+  pid_t pid;
+  char pid_str[10];
+
   if (argc < 2)
   {
     printf("\033[1;33mNota:\033[0m el programa se debe utilizar como \033[1;36m%s <archivo_sudoku>\033[0m\n", argv[0]);
@@ -101,10 +108,103 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  // Llenar la grilla Sudoku desde el archivo
+  // Llenar la grilla Sudoku desde el archivo y mostrar el proceso que lo hizo
   loadSudokuGridFromFile(fileData);
+  printf("PID del proceso: %d\n", getpid());
 
-  // Mostrar la grilla cargada
+  pid = fork();
+
+  if (pid > 0)
+  {
+    pthread_t thread_col;
+    int columnas_validas = 1;
+
+    // Función del hilo que valida columnas
+    void *threadValidateColumns(void *arg)
+    {
+      int *result = (int *)arg;
+      printf("El thread que ejecuta el método para ejecutar la revisión de columnas es: %ld\n", syscall(SYS_gettid));
+
+      for (int i = 0; i < SIZE; i++)
+      {
+        if (!validateColumn(i))
+        {
+          *result = 0;
+          break;
+        }
+        printf("En la revisión de columnas el siguiente es un thread en ejecución: %ld\n", syscall(SYS_gettid));
+      }
+
+      pthread_exit(0);
+    }
+
+    // Crear thread u esérar a que termine
+    pthread_create(&thread_col, NULL, threadValidateColumns, &columnas_validas);
+    pthread_join(thread_col, NULL);
+    printf("El thread en el que se ejecuta main es: %ld\n", syscall(SYS_gettid));
+
+    // Esperar al hijo que ejecutó ps
+    wait(NULL);
+
+    // Validar filas
+    int filas_validas = 1;
+    for (int i = 0; i < SIZE; i++)
+    {
+      if (!validateRow(i))
+      {
+        filas_validas = 0;
+        break;
+      }
+    }
+
+    // Validar subarreglo
+    int subgrids_validos = 1;
+    for (int i = 0; i < SIZE; i += 3)
+    {
+      for (int j = 0; j < SIZE; j += 3)
+      {
+        if (!validateSubgrid(i, j))
+        {
+          subgrids_validos = 0;
+          break;
+        }
+      }
+    }
+
+    if (filas_validas && columnas_validas && subgrids_validos)
+      printf("Sudoku resuelto!\n");
+    else
+      printf("Sudoku inválido.\n");
+
+    // Segundo fork para ejecutar ps de nuevo
+    pid_t pid2 = fork();
+    if (pid2 == 0)
+    {
+      char pid_str[10];
+      snprintf(pid_str, sizeof(pid_str), "%d", getppid());
+      execlp("ps", "ps", "-p", pid_str, "-lLf", (char *)NULL);
+      perror("execlp falló");
+      exit(1);
+    }
+    else if (pid2 > 0)
+    {
+      wait(NULL);
+    }
+  }
+  else if (pid == 0)
+  {
+    // Hijo
+    snprintf(pid_str, sizeof(pid_str), "%d", getppid());
+    execlp("ps", "ps", "-p", pid_str, "-lLf", (char *)NULL);
+    perror("execlp falló");
+    exit(1);
+  }
+  else
+  {
+    perror("Error al hacer fork");
+    exit(1);
+  }
+
   printSudoku();
 
   munmap(fileData, SIZE * SIZE);
