@@ -11,6 +11,7 @@
 #include <sys/wait.h>
 #include <pthread.h>
 #include <sys/syscall.h>
+#include <omp.h>
 
 #define SIZE 9
 #define SUBGRID_SIZE 3
@@ -123,18 +124,20 @@ int main(int argc, char *argv[])
     void *threadValidateColumns(void *arg)
     {
       int *result = (int *)arg;
+      int local_result = 1;
       printf("El thread que ejecuta el método para ejecutar la revisión de columnas es: %ld\n", syscall(SYS_gettid));
+      int i;
 
+#pragma omp parallel for private(i) reduction(&& : local_result)
       for (int i = 0; i < SIZE; i++)
       {
         if (!validateColumn(i))
-        {
-          *result = 0;
-          break;
-        }
-        printf("En la revisión de columnas el siguiente es un thread en ejecución: %ld\n", syscall(SYS_gettid));
+          local_result = 0;
+
+        printf("Thread en ejecución durante validación de columnas: %ld\n", syscall(SYS_gettid));
       }
 
+      *result = local_result;
       pthread_exit(0);
     }
 
@@ -148,26 +151,24 @@ int main(int argc, char *argv[])
 
     // Validar filas
     int filas_validas = 1;
+    int i;
+#pragma omp parallel for private(i) reduction(&& : filas_validas)
     for (int i = 0; i < SIZE; i++)
     {
       if (!validateRow(i))
-      {
         filas_validas = 0;
-        break;
-      }
     }
 
     // Validar subarreglo
     int subgrids_validos = 1;
+    int j;
+#pragma omp parallel for collapse(2) private(i, j) reduction(&& : subgrids_validos)
     for (int i = 0; i < SIZE; i += 3)
     {
       for (int j = 0; j < SIZE; j += 3)
       {
         if (!validateSubgrid(i, j))
-        {
           subgrids_validos = 0;
-          break;
-        }
       }
     }
 
@@ -177,6 +178,7 @@ int main(int argc, char *argv[])
       printf("Sudoku inválido.\n");
 
     // Segundo fork para ejecutar ps de nuevo
+    printf("Antes de terminar el estado del proceso y sus threads:\n");
     pid_t pid2 = fork();
     if (pid2 == 0)
     {
