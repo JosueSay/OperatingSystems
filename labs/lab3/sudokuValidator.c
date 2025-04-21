@@ -12,6 +12,7 @@
 #include <pthread.h>
 #include <sys/syscall.h>
 #include <omp.h>
+#include <stdbool.h>
 
 #define SIZE 9
 #define SUBGRID_SIZE 3
@@ -85,6 +86,7 @@ int validateSubgrid(int startRow, int startCol)
 
 int main(int argc, char *argv[])
 {
+  omp_set_num_threads(1);
   pid_t pid;
   char pid_str[10];
 
@@ -126,9 +128,13 @@ int main(int argc, char *argv[])
       int *result = (int *)arg;
       int local_result = 1;
       printf("El thread que ejecuta el método para ejecutar la revisión de columnas es: %ld\n", syscall(SYS_gettid));
+
+      omp_set_nested(true);
+      omp_set_num_threads(9);
+
       int i;
 
-#pragma omp parallel for private(i) reduction(&& : local_result)
+#pragma omp parallel for private(i) schedule(dynamic) reduction(&& : local_result)
       for (int i = 0; i < SIZE; i++)
       {
         if (!validateColumn(i))
@@ -152,7 +158,7 @@ int main(int argc, char *argv[])
     // Validar filas
     int filas_validas = 1;
     int i;
-#pragma omp parallel for private(i) reduction(&& : filas_validas)
+#pragma omp parallel for private(i) schedule(dynamic) reduction(&& : filas_validas)
     for (int i = 0; i < SIZE; i++)
     {
       if (!validateRow(i))
@@ -162,7 +168,7 @@ int main(int argc, char *argv[])
     // Validar subarreglo
     int subgrids_validos = 1;
     int j;
-#pragma omp parallel for collapse(2) private(i, j) reduction(&& : subgrids_validos)
+#pragma omp parallel for collapse(2) private(i, j) schedule(dynamic) reduction(&& : subgrids_validos)
     for (int i = 0; i < SIZE; i += 3)
     {
       for (int j = 0; j < SIZE; j += 3)
