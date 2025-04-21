@@ -69,7 +69,7 @@ OpenMP usa un **thread pool** y reusa hilos para evitar el costo de creación y 
 - Mayor distribución del trabajo entre hilos.
 - Antes de usar `schedule(dynamic)`, algunos hilos ejecutaban varias iteraciones seguidas.
 
-Deducción: OpenMP usa distribución estática por defecto, lo cual puede generar desequilibrio de carga. Con `dynamic`, el reparto es más equitativo.
+Posiblemente, debido a que OpenMP usa distribución estática por defecto, lo cual puede generar desequilibrio de carga. Con `dynamic`, el reparto es más equitativo.
 
 ## 9. ¿Qué pasó al agregar `omp_set_num_threads()` sin `omp_set_nested()`?
 
@@ -82,7 +82,4 @@ La concurrencia depende del número de hilos y cómo se balancea la carga.
 ## 10. ¿Qué efecto tuvo `omp_set_nested(true)`?
 
 - Permite crear regiones paralelas dentro de otras.
-- En este caso, permite que el `pthread` cree un equipo de hilos para OpenMP sin conflictos.
-- Aumenta la concurrencia **y** complejidad de planificación.
-
-Este ajuste **facilitó paralelismo anidado**, necesario al mezclar `pthread` y OpenMP en distintos niveles.
+- En este caso, permite que el `pthread` cree un equipo de hilos.
