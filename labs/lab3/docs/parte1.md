@@ -1,10 +1,10 @@
 # Documentación: `SudokuValidator.c`
 
-## Descripción General
-
 Este programa en lenguaje C tiene como objetivo leer desde un archivo la solución propuesta para un Sudoku de 9x9, cargarla en una estructura bidimensional en memoria, e imprimirla como una grilla para su visualización. Además, se definen funciones para validar filas, columnas y subarreglos 3x3, aunque en esta versión no se utilizan directamente en el `main()`.
 
 > El archivo `sudoku` debe estar en el mismo directorio o indicarse su ruta relativa/absoluta.
+
+![Resultado](../images/llenar_grid.png "Resultado")
 
 ## Estructura del Código
 

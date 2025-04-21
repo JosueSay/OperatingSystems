@@ -4,6 +4,8 @@ En esta etapa se implementó la directiva `#pragma omp parallel for` sobre los c
 
 Para evitar **race conditions**, se utilizó la cláusula `private(i)` en las variables de iteración que se declararon fuera del ciclo `for`, y la cláusula `reduction(&& : resultado)` en las variables que acumulan el resultado de cada validación. Esto garantiza que cada hilo trabaje con su propia copia local de las variables, y que el resultado se combine de forma segura al finalizar la ejecución paralela.
 
+![Resultado](../images/paralelismo.png "Resultado")
+
 ```c
 int i;
 #pragma omp parallel for private(i) reduction(&& : columnas_validas)
@@ -28,7 +30,7 @@ Se imprimieron distintos `TID` al ejecutar la validación de columnas en paralel
 NLWP = 1
 ```
 
-➡️ Los hilos de OpenMP ya habían terminado, por eso no aparecen en ese momento.
+Los hilos de OpenMP ya habían terminado, por eso no aparecen en ese momento.
 
 ### 3. Segundo `ps` (antes de terminar el programa)
 
@@ -36,7 +38,7 @@ NLWP = 1
 NLWP = 12
 ```
 
-➡️ Los hilos seguían activos al momento de ejecutar `ps`, por eso se capturaron todos los LWP en ese instante.
+Los hilos seguían activos al momento de ejecutar `ps`, por eso se capturaron todos los LWP en ese instante.
 
 | Momento del `ps`                     | ¿LWP múltiples?     | ¿Por qué?                                                |
 |--------------------------------------|---------------------|----------------------------------------------------------|

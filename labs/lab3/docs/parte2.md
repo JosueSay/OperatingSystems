@@ -2,6 +2,8 @@
 
 En esta segunda fase del programa `SudokuValidator.c`, se amplía la funcionalidad incluyendo verificación multihilo de columnas usando `pthread`, validación secuencial de filas y subcuadros 3x3, y el uso de procesos (`fork()`) para ejecutar el comando `ps -p <PID> -lLf`. Esto permite monitorear los lightweight processes (LWP) asociados al proceso padre durante la ejecución y al finalizar.
 
+![Resultado](../images/validar_sudoku.png "Resultado")
+
 ## Estructura del Código
 
 ### 1. Función `threadValidateColumns`

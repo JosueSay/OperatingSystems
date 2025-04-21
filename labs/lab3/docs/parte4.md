@@ -2,6 +2,8 @@
 
 En esta fase se aplicaron varias configuraciones adicionales al paralelismo con OpenMP para ajustar el comportamiento de los hilos y facilitar su análisis con herramientas del sistema operativo.
 
+![Resultado](../images/paralelismo2.png "Resultado")
+
 ## Cambios realizados
 
 - Se añadió `omp_set_num_threads(1);` al inicio de `main()` para establecer inicialmente un solo hilo.
